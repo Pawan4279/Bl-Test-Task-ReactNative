@@ -4,12 +4,13 @@ import React from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import Login from '../screens/Login';
 import LoginSignup from '../screens/LoginSignup';
+import Header from '../componnent/Header';
 
 const Stack = createNativeStackNavigator();
 const MainNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='LoginSignup' screenOptions={{}}>
+      <Stack.Navigator initialRouteName='LoginSignup' screenOptions={{header: props => <Header {...props} />}}>
         <Stack.Screen
           options={{headerShown: false}}
           name="LoginSignup"

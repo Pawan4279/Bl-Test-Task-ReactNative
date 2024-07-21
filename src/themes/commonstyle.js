@@ -6,6 +6,11 @@ const commonStyle = StyleSheet.create({
   container: {
     flex: 1,
     padding:5
+  },
+  pageContainer :  {
+    flex: 1,
+    padding:5,
+    paddingTop:50
   }
 });
 

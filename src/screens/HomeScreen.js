@@ -1,10 +1,14 @@
 import React from "react";
 import { Text, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import commonStyle from "../themes/commonstyle";
 
 const HomeScreen = (props) =>{
 
     return(
-        <View style={{height:200,width:200,borderWidth:1}}><Text>Home Screen</Text></View>
+        <LinearGradient
+        colors={['#E44D26', '#F16529']}
+        style={commonStyle.pageContainer}><Text>Home Screen</Text></LinearGradient>
     )
 }
 
