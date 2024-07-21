@@ -1,9 +1,11 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Appbar} from 'react-native-paper';
+import {Appbar, Badge} from 'react-native-paper';
+import { useSelector } from 'react-redux';
 
 const Header = props => {
-
+  const items = useSelector((state) => state.cart.items);
+  console.log(items)
   return (
     <>
       <View
@@ -28,7 +30,9 @@ const Header = props => {
         />
       </View>
       <View style={{position: 'absolute', right: 5, top: 5}}>
-        <Appbar.Action icon="cart" iconColor="white" onPress={()=>{}} />
+        
+      {items.length>0 &&<Badge style={{position:'absolute',top:5,right:3}}>{items.length}</Badge>}
+     <Appbar.Action icon="cart" iconColor="white" onPress={()=>{}} />
       </View>
     </>
   );

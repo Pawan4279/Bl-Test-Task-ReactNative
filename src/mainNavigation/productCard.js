@@ -9,13 +9,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {fetchProducts} from '../utils/utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {addItem, removeItem} from '../store/slice/CartSlice';
 
 const ProductCard = props => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cart.items);
 
+  const handleAddToCart = product => {
+    dispatch(addItem(product));
+  };
+
+  const handleRemoveFromCart = (product) => {
+    dispatch(removeItem(product));
+  };
   useEffect(() => {
     const loadProducts = async () => {
       setLoading(true);
@@ -33,6 +44,10 @@ const ProductCard = props => {
     if (hasMore && !loading) {
       setPage(prevPage => prevPage + 1);
     }
+  };
+
+  const isProductInCart = (productId) => {
+    return cartItems.some(item => item.id === productId);
   };
 
   return (
@@ -53,11 +68,24 @@ const ProductCard = props => {
                 {item.description}
               </Text>
               <Text style={styles.price}>Rs.{item.price}</Text>
-              <TouchableOpacity style={styles.btn}>
-                <Text style={{color: 'black', fontWeight: 'bold'}}>
-                  Add to cart
-                </Text>
-              </TouchableOpacity>
+             
+              {isProductInCart(item.id) ?  (
+                <TouchableOpacity
+                  style={styles.btn1}
+                  onPress={() => handleRemoveFromCart(item)}>
+                  <Text style={{color: 'white', fontWeight: 'bold'}}>
+                    Remove from cart
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={() => handleAddToCart(item)}>
+                  <Text style={{color: 'black', fontWeight: 'bold'}}>
+                    Add to cart
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           </View>
         )}
@@ -123,6 +151,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
+  btn1 : {
+    height: 30,
+    backgroundColor: 'green',
+    marginHorizontal: 10,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 10,
+  }
 });
 
 export default ProductCard;
