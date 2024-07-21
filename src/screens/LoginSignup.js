@@ -45,7 +45,7 @@ const LoginSignup = props => {
             <Text style={styles.switchText}>Register</Text>
           </TouchableOpacity>
         </View>
-        {activeTab === 'Login' ? <Login /> : <SignUp />}
+        {activeTab === 'Login' ? <Login navigation={props.navigation} /> : <SignUp switchScreen={()=>switchTab()}/>}
       </LinearGradient>
   );
 };
