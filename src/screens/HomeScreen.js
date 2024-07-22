@@ -4,23 +4,28 @@ import LinearGradient from 'react-native-linear-gradient';
 import commonStyle from '../themes/commonstyle';
 import ProductCard from '../mainNavigation/productCard';
 import {Modal, Portal} from 'react-native-paper';
+import { useIsFocused } from '@react-navigation/native';
 
 const HomeScreen = props => {
   const [exitDialogVisible, setExitDialogVisible] = useState(false);
-  //p
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    const backAction = () => {
-      setExitDialogVisible(true);
-      return true;
-    };
+    if (isFocused) {
+      const backAction = () => {
+        setExitDialogVisible(true);
+        return true;
+      };
 
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+      );
 
-    return () => backHandler.remove();
-  }, []);
+      // Cleanup function
+      return () => backHandler.remove();
+    }
+  }, [isFocused]);
 
   const handleCancel = () => {
     setExitDialogVisible(false);
