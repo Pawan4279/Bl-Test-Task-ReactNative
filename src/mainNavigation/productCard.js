@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {fetchProducts} from '../utils/utils';
+import {fetchProducts, horizontalScale, verticalScale} from '../utils/utils';
 import {useDispatch, useSelector} from 'react-redux';
 import {addItem, removeItem} from '../store/slice/CartSlice';
 
@@ -113,17 +113,15 @@ const styles = StyleSheet.create({
   productContainer: {
     flexDirection: 'row',
     flex: 1,
-    marginBottom: 16,
+    marginBottom: verticalScale(16),
     backgroundColor: 'whitesmoke',
-    // height:150
+    elevation:5,
+    borderRadius:10,
+    padding:5
   },
   image: {
-    // width: 100,
-    // height: 100,
     flex: 1,
-    marginRight: 16,
-    // borderWidth:1,
-    // borderColor:'#E44D26'
+    marginRight: horizontalScale(16),
   },
   details: {
     flex: 1,
