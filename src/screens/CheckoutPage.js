@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,8 @@ import {
   Image,
   Animated,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from '../store/slice/CartSlice'; // Ensure you have this action
+import {useDispatch, useSelector} from 'react-redux';
+import {clearCart} from '../store/slice/CartSlice'; // Ensure you have this action
 import LinearGradient from 'react-native-linear-gradient';
 import commonStyle from '../themes/commonstyle';
 
@@ -29,44 +29,57 @@ const CheckoutPage = () => {
     }).start();
   };
 
+  const totalPrice = cartItems.reduce((sum, item) => sum + item.price, 0);
   return (
     <LinearGradient
       colors={['#E44D26', '#F16529']}
       style={commonStyle.pageContainer}>
       {orderCompleted ? (
-        <Animated.View style={[styles.animationContainer, { opacity: fadeAnim }]}>
+        <Animated.View style={[styles.animationContainer, {opacity: fadeAnim}]}>
           <Text style={styles.successText}>Order Completed!</Text>
         </Animated.View>
       ) : (
-        <View style={{ marginBottom: 90 }}>
-          <FlatList
-            data={cartItems}
-            style={{ paddingBottom: 50 }}
-            ListHeaderComponent={() => (
-              <>
-                <Text style={styles.title}>Checkout</Text>
-                <Text style={styles.subTitle}>Items in your cart:</Text>
-              </>
-            )}
-            renderItem={({ item }) => (
-              <View style={styles.productContainer}>
-                <Image
-                  source={require('../../assets/images/noImageFound.png')}
-                  style={styles.image}
-                />
-                <View style={styles.details}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.description} numberOfLines={2}>
-                    {item.description}
-                  </Text>
-                  <Text style={styles.price}>Rs.{item.price}</Text>
-                </View>
-              </View>
-            )}
-          />
-          <TouchableOpacity style={styles.button} onPress={handlePlaceOrder}>
-            <Text style={styles.buttonText}>Place Order with COD</Text>
-          </TouchableOpacity>
+        <View style={{marginBottom: 90}}>
+          {cartItems.length > 0 ? (
+            <>
+              <FlatList
+                data={cartItems}
+                style={{paddingBottom: 50}}
+                ListHeaderComponent={() => (
+                  <>
+                    <Text style={styles.title}>Checkout</Text>
+                    <Text style={styles.subTitle}>Items in your cart:</Text>
+                  </>
+                )}
+                renderItem={({item}) => (
+                  <View style={styles.productContainer}>
+                    <Image
+                      source={require('../../assets/images/noImageFound.png')}
+                      style={styles.image}
+                    />
+                    <View style={styles.details}>
+                      <Text style={styles.title}>{item.title}</Text>
+                      <Text style={styles.description} numberOfLines={2}>
+                        {item.description}
+                      </Text>
+                      <Text style={styles.price}>Rs.{item.price}</Text>
+                    </View>
+                  </View>
+                )}
+              />
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handlePlaceOrder}>
+                <Text style={styles.buttonText}>
+                  Place Order with COD Rs. {cartItems.length > 0 && totalPrice}
+                </Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <Text style={{color: 'white', fontWeight: 'bold'}}>
+              no item fount
+            </Text>
+          )}
         </View>
       )}
     </LinearGradient>
@@ -121,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
     fontWeight: 'bold',
-    color:'white'
+    color: 'white',
   },
   productContainer: {
     flexDirection: 'row',
