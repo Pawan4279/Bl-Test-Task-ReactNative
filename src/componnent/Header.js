@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 const Header = props => {
   const items = useSelector((state) => state.cart.items);
-  console.log(items)
+  console.log(props.navigation)
   return (
     <>
       <View
@@ -14,9 +14,10 @@ const Header = props => {
           left: 5,
           top: 5,
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          width: 70,
+          width: 100,
           height: 35,
           borderRadius: 10,
+          
         }}>
         <Appbar.Content
           color="white"
@@ -26,13 +27,14 @@ const Header = props => {
             fontSize: 16,
             marginLeft: 10,
             textAlignVertical: 'center',
+            
           }}
         />
       </View>
       <View style={{position: 'absolute', right: 5, top: 5}}>
         
       {items.length>0 &&<Badge style={{position:'absolute',top:5,right:3}}>{items.length}</Badge>}
-     <Appbar.Action icon="cart" iconColor="white" onPress={()=>{}} />
+     <Appbar.Action icon="cart" iconColor="white" onPress={()=>{props.navigation.navigate("Checkout")}} />
       </View>
     </>
   );

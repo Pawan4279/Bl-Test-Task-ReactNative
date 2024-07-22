@@ -30,7 +30,7 @@ const Login = props => {
       });
 
       if (isValidUser) {
-        console.log()
+        await AsyncStorage.setItem('login', JSON.stringify(true));
         props.navigation.navigate("Home")
       } else {
         alert('Invalid email or password');
