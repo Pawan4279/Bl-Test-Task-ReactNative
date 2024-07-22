@@ -24,7 +24,7 @@ const MainNavigation = () => {
   }, []);
 
   if (!initialRouteName) {
-    return null; // or a loading indicator
+    return null; 
   }
 
   return (
